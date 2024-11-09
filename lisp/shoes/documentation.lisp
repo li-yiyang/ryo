@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 16:12
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-08 16:12
+;; Last-Updated: 2024-11-10 01:13
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -92,6 +92,36 @@ Example:
       (alert \"Yes\"))
 "))
 
+;; Timer
+
+(defclass timer-class (shoes)
+  (thread
+   (function :initarg :function
+             :initform (error "Missing `:function'. ")))
+  (:documentation
+   "Shoes contains three timer classes:
+1. the `animation' class;
+2. the `every-sec' class;
+3. and the `timer' class.
+
+Both `animation' and `everies' loop over and over after they start.
+`timer' happen once, as a one-shot timer. "))
+
+(defclass animation (timer-class)
+  ((fps :initarg :fps :initform 10))
+  (:documentation
+   "The `animation' class calls the `function' every `1/fps' second. "))
+
+(defclass every-sec (timer-class)
+  ((sec :initarg :sec :initform 10))
+  (:documentation
+   "The `every-sec' class calls the `function' every `sec' second. "))
+
+(defclass timer (timer-class)
+  ((sec :initarg :sec :initform 10))
+  (:documentation
+   "The `timer' class calls the `function' after `sec'. "))
+
 ;; TextBlock
 ;; TODO:
 ;; make the declaration of new text-like element more easier
@@ -160,14 +190,16 @@ with a #06E (blue) colored stroke. ")
 (define-text-class sub
     "subscript text"
   (with-wrap-as-shoes
-      (sub sub (clog:create-child *slot*
-                                  (fmt "<sub class=\".ryo-shoes-sub\">~A</sub>" text)))))
+      (sub sub (clog:create-child
+                *slot*
+                (fmt "<sub class=\".ryo-shoes-sub\">~A</sub>" text)))))
 
 (define-text-class sup
     "supscript text"
   (with-wrap-as-shoes
-      (sub sub (clog:create-child *slot*
-                                  (fmt "<sup class=\".ryo-shoes-sub\">~A</sup>" text)))))
+      (sub sub (clog:create-child
+                *slot*
+                (fmt "<sup class=\".ryo-shoes-sub\">~A</sup>" text)))))
 
 ;;;; Protocol
 
@@ -233,6 +265,26 @@ Or shows the element, if it is hidden. "))
 The `handler' is handed `element' itself. "))
 
 ;;; Elements
+
+;; Timer-Class
+
+(defgeneric start (timer-class)
+  (:documentation
+   "Both types of timers automatically start themselves, so
+there's no need to use this normally. But if you stop a timer
+and would like to start it up again, then by all means: use
+this! "))
+
+(defgeneric stop (timer-class)
+  (:documentation
+   "Pauses the animation or timer. In the case of a one-shot
+timer that's already happened, it's already stopped and this
+method will have no effect. "))
+
+(defgeneric toggle (timer-class)
+  (:documentation
+   "If the animation or timer is stopped, it is started.
+Otherwise, if it is already running, it is stopped. "))
 
 ;; TextBlock
 
