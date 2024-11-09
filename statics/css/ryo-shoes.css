@@ -1,0 +1,56 @@
+.ryo-shoes-stack {
+    display: block;
+}
+
+.ryo-shoes-flow {
+    display: inline-block;
+}
+
+.ryo-shoes-banner {
+    font-size: 48px;
+}
+
+.ryo-shoes-title {
+    font-size: 34px;
+}
+
+.ryo-shoes-subtitle {
+    font-size: 26px;
+}
+
+.ryo-shoes-tagline {
+    font-size: 18px;
+}
+
+.ryo-shoes-para {
+    font-size: 12px;
+}
+
+.ryo-shoes-caption {
+    font-size: 14px;
+}
+
+.ryo-shoes-inscription {
+    font-size: 10px;
+}
+
+.ryo-shoes-em {
+    font-style: italic;
+}
+
+.ryo-shoes-span {
+    font-style: normal;
+}
+
+.ryo-shoes-ins {
+    text-decoration: underline;
+}
+
+.ryo-shoes-link {
+    color: #06E;
+    text-decoration: underline;
+}
+
+.ryo-shoes-strong {
+    font-weight: bold;
+}
