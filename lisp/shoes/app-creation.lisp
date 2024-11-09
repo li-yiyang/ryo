@@ -1,13 +1,13 @@
-;;; app-creatation.lisp --- Create a Shoes App
+;;; app-creation.lisp --- Create a Shoes App
 
-;; File:        app-creatation.lisp
+;; File:        app-creation.lisp
 ;; Description: Create a Shoes App
 ;; Author:      凉凉
 ;; Maintainer:  凉凉
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-06 17:55
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-06 17:55
+;; Last-Updated: 2024-11-09 14:36
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -46,4 +46,4 @@
   (declare (ignore owner title width height resizable centerp))
   `(%window (lambda () ,@body) ,@styles))
 
-;;; app-creatation.lisp ends here
+;;; app-creation.lisp ends here
