@@ -55,13 +55,11 @@
 ;;; Events
 
 (defmethod on-click ((element element) handler)
-  (clog:set-on-click element (lambda (obj) (funcall handler obj))))
+  (clog:set-on-click element (ignore-obj obj (funcall handler)))
+  element)
 
-(defmacro click ((element &optional (self (gensym "SELF") self?)) &body body)
-  "Set click event on `element'.
-The `self' is the variable name to the clicked element. "
-  `(on-click ,element (shoes-lambda (,self)
-                        ,@(unless self? `((declare (ignore ,self))))
-                        ,@body)))
+(defmethod on-change ((element element) handler)
+  (clog:set-on-change element (ignore-obj obj (funcall handler)))
+  element)
 
 ;;; common-implementation.lisp ends here

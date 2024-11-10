@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-02 22:47
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-02 22:49
+;; Last-Updated: 2024-11-10 15:56
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -49,5 +49,17 @@ with parameter `:port', the port value will be bind to
 
 Develop Note:
 It's like opening the box and enter to it. ")
+
+(defparameter *slef* nil
+  "Current handler function caller.
+
+Example:
+
+    (button \"Click Me\"
+      (fmt! \"*self* is button ~A\" *self*))
+
+Develop Note:
+`*self* should only change when defining a `shoes-lambda',
+mostly frequently used in Events. ")
 
 ;;; config.lisp ends here

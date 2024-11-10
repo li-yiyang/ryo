@@ -17,6 +17,15 @@
 
 (in-package :ryo.shoes)
 
+(defmacro ignore-obj (obj &body body)
+  `(lambda (,obj) (declare (ignore ,obj)) ,@body))
+
+(defmacro with-wrap ((var &body exprs) &body body)
+  "With warp and return `var'. "
+  `(let ((,var (progn ,@exprs)))
+     ,@body
+     ,var))
+
 (defmacro with-wrap-as-shoes ((var shoes-class &body exprs) &body body)
   "To wrap the `exprs' result as `shoes-class' and do some process in `body'.
 This will add `var' to Slot contents if `*slot*' is none-nil. "
@@ -45,7 +54,7 @@ The span content is the result of `body'. "
 
 ;; TODO:
 ;; is there any better way to make this more wiser?
-(defmacro shoes-lambda (lambda-list &body body)
+(defmacro shoes-lambda (self &body body)
   "Tricky patches for the original lambda.
 
 This returns a lambda function with closure variables: `*slot*', `*app*',
@@ -55,19 +64,23 @@ the original closure environment.
 This is little tricky and should only be used when dealing with
 events, timer (threads) code rather than directly exposed to
 normal user. "
-  (let ((slot (gensym "SLOT"))
-        (app  (gensym "APP")))
+  (let ((slot  (gensym "SLOT"))
+        (app   (gensym "APP"))
+        (selfv (gensym "SELF")))
     (loop for (expr . rest) on body by #'cdr
           while (and (listp expr) (eq (first expr) 'declare))
           collect expr into declarations
           finally (return
-                    `(let ((,slot *slot*)
-                           (,app  *app*))
-                       (lambda ,lambda-list
+                    `(let ((,slot  *slot*)
+                           (,app   *app*)
+                           (,selfv ,self))
+                       (lambda ()
                          ,@declarations
                          (let ((*app*  ,app)
-                               (*slot* ,slot))
-                           (declare (ignorable *app* *slot*))
+                               (*slot* ,slot)
+                               (*self* ,selfv))
+                           (declare (ignorable *app* *slot* *self*))
+                           (declare (special *app* *slot* *self*))
                            ,@(cons expr rest))))))))
 
 ;;; utils.lisp ends here

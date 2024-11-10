@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-06 20:52
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 01:14
+;; Last-Updated: 2024-11-10 15:56
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -16,6 +16,32 @@
 ;;
 
 (in-package :ryo.shoes)
+
+;;; Button
+
+(defmethod text ((button button))
+  (clog:text button))
+
+(defmethod (setf text) ((text string) (button button))
+  (setf (clog:text button) text))
+
+;;; ListBox
+
+(defmethod text ((list-box list-box))
+  (clog:select-text list-box))
+
+(defmethod choose ((list-box list-box) item)
+  (setf (clog:value list-box) item)
+  (clog:jquery-execute list-box "trigger(\"change\")"))
+
+(defmethod items ((list-box list-box))
+  (slot-value list-box 'items))
+
+(defmethod (setf items) ((items list) (list-box list-box))
+  (setf (clog:inner-html list-box) "")
+  (loop for item in items do
+    (clog:add-select-option list-box item item))
+  (setf (slot-value list-box 'items) items))
 
 ;;; Timers
 

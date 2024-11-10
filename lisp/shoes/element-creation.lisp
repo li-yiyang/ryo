@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 18:06
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 01:13
+;; Last-Updated: 2024-11-10 15:56
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -17,14 +17,38 @@
 
 (in-package :ryo.shoes)
 
+(defun %button (text &rest styles &key &allow-other-keys)
+  "Create a `button'. "
+  (declare (ignore styles))
+  (with-wrap-as-shoes (button button (clog:create-button *slot*
+                                                         :class "ryo-shoes-button"
+                                                         :content text))))
+
 (defmacro button (text &body body)
-  "Create a Button. "
+  "Create a `button'. "
   (let ((button (gensym "BUTTON")))
-    `(with-wrap-as-shoes (,button button (clog:create-button *slot*
-                                                            :class "ryo-shoes-button"
-                                                            :content ,text))
-       ,(unless (endp body)
-          `(click (,button) ,@body)))))
+    `(with-wrap (,button (%button ,text))
+       ,(unless (endp body) `(click ,button ,@body)))))
+
+(defun %list-box (list-box-items &key &allow-other-keys)
+  "Create a `list-box'. "
+  (with-wrap-as-shoes (list-box list-box
+                        (clog:create-select *slot*
+                                            :class "ryo-shoes-select"))
+    (with-slots (items) list-box
+      (loop for item in list-box-items do
+        (progn
+          (clog:add-select-option list-box item item)
+          (push item items)))
+      (setf items (nreverse items)))))
+
+(defmacro list-box ((items &rest styles &key &allow-other-keys) &body body)
+  "Create a `list-box'. "
+  (if (endp body)
+      `(%list-box ,items ,@styles)
+      (let ((list-box (gensym "LIST-BOX")))
+        `(with-wrap (,list-box (%list-box ,items ,@styles))
+           (change ,list-box ,@body)))))
 
 (defmacro animation (fps &body body)
   "Create an `animation' element with `fps'. "

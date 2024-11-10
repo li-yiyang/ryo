@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 16:12
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 01:13
+;; Last-Updated: 2024-11-10 15:56
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -91,6 +91,15 @@ Example:
     (button \"OK!\"
       (alert \"Yes\"))
 "))
+
+;; ListBox
+
+(defclass list-box (element clog:clog-select)
+  ((items :initform ()))
+  (:documentation
+   "List boxes (also called \"combo boxes\" or \"drop-down boxes\" or
+\"select boxes\" in some places) are a list of options that
+drop down when you click on the box. "))
 
 ;; Timer
 
@@ -262,9 +271,35 @@ Or shows the element, if it is hidden. "))
 (defgeneric on-click (element handler)
   (:documentation
    "When a shoes `element' is clicked, its `handler' is called.
-The `handler' is handed `element' itself. "))
+The `handler' is handed `element' itself.
+Return `element'. "))
+
+(defmacro click (element &body body)
+  "Set click event on `element'.
+The `self' is the variable name to the clicked element. "
+  `(on-click ,element (shoes-lambda ,element ,@body)))
+
+(defgeneric on-change (element handler)
+  (:documentation
+   "Set change event on `element'.
+Return `element'. "))
+
+(defmacro change (element &body body)
+  `(on-change ,element (shoes-lambda ,element ,@body)))
 
 ;;; Elements
+
+;; ListBox
+
+(defgeneric choose (list-box item)
+  (:documentation
+   "Selects the option in the `list-box' that matches the string
+given by `item'. "))
+
+(defgneric items (list-box)
+  (:documentation
+   "Returns the complete list of strings that the list box
+presently shows as its options."))
 
 ;; Timer-Class
 
