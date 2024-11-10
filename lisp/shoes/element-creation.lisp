@@ -85,19 +85,30 @@
           (push item list-box-items)))
       (setf list-box-items (nreverse list-box-items)))))
 
+;; Progress
+
+(defshoes-element progress nil (styles width height (fraction 0.0))
+  "Create a `progress' bar. "
+  (with-wrap-as-shoes (progress progress (clog:create-progress-bar
+                                          *slot*
+                                          :class "ryo-shoes-progress"
+                                          :value fraction))
+    (when width  (setf (width  progress) width))
+    (when height (setf (height progress) height))))
+
 ;; TimerClass
 
 (defmacro animation (fps &body body)
   "Create an `animation' element with `fps'. "
   `(make-instance 'animation
                   :fps ,fps
-                  :function (shoes-lambda () ,@body)))
+                  :function (shoes-lambda () ,@body (clog:validp *app*))))
 
 (defmacro every-sec (sec &body body)
   "Create an `every-sec' element with `sec'. "
   `(make-instance 'every-sec
                   :sec      ,sec
-                  :function (shoes-lambda () ,@body)))
+                  :function (shoes-lambda () ,@body (clog:validp *app*))))
 
 (defmacro timer (sec &body body)
   "Create an `timer' element with `sec'. "

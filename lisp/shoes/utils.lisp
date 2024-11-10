@@ -111,6 +111,6 @@ normal user. "
            (defmacro ,element (&rest ,styles &key ,@keys &allow-other-keys)
              ,docstring
              (declare (ignore ,@keysyms))
-             `(with-wrap (,',elem (,',func ,@styles))))))))
+             `(with-wrap (,',elem (,',func ,@,styles))))))))
 
 ;;; utils.lisp ends here

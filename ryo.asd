@@ -26,6 +26,8 @@
                trivial-garbage
                str
                clog clog-c3
+               parse-float
+               qbase64
                lparallel)
   :serial t
   :components

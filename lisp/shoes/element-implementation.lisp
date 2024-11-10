@@ -68,6 +68,17 @@
     (clog:add-select-option list-box item item))
   (setf (slot-value list-box 'items) items))
 
+;;; Progress
+
+(defmethod fraction ((progress progress))
+  (/ (parse-float:parse-float (clog:value progress)) 100.0))
+
+(defmethod (setf fraction) (decimal (progress progress))
+  (cond ((<= 0.0 decimal 1.0) (setf (clog:value progress) (truncate (* 100 decimal))))
+        ((<= 0   decimal 100) (setf (clog:value progress) (truncate decimal)))
+        (t (errorf "Bad value for progress: ~A. (should be 0.0~~1.0 or 0~~100). "
+                   decimal))))
+
 ;;; Timers
 
 (defmethod initialize-instance :after ((timer timer-class) &key)
@@ -77,13 +88,13 @@
   (with-slots (function thread fps) timer
     (setf thread (bt:make-thread
                   (let ((sleep (float (/ 1 fps))))
-                    (lambda () (loop do (sleep sleep) do (funcall function))))
+                    (lambda () (loop do (sleep sleep) while (funcall function))))
                   :name (fmt "~A thread" timer)))))
 
 (defmethod start ((timer every-sec))
   (with-slots (function thread sec) timer
     (setf thread (bt:make-thread
-                  (lambda () (loop do (sleep sec) do (funcall function)))
+                  (lambda () (loop do (sleep sec) while (funcall function)))
                   :name (fmt "~A thread" timer)))))
 
 (defmethod start ((timer timer))

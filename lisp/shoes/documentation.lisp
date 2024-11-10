@@ -140,6 +140,14 @@ from a file or directly off the web. "))
 \"select boxes\" in some places) are a list of options that
 drop down when you click on the box. "))
 
+;; Progress
+
+(defclass progress (element clog:clog-progress-bar) ()
+  (:documentation
+   "Progress bars show you how far along you are in an activity.
+Usually, a progress bar represents a percentage (from 0% to 100%.)
+Shoes thinks of progress in terms of the decimal numbers 0.0 to 1.0. "))
+
 ;; Timer
 
 (defclass timer-class (shoes)
@@ -351,6 +359,17 @@ given by `item'. "))
   (:documentation
    "Returns the complete list of strings that the list box
 presently shows as its options."))
+
+;; Progress
+
+(defgeneric fraction (progress)
+  (:documentation
+   "Returns a decimal number from 0.0 to 1.0,
+indicating how far along the progress bar is. "))
+
+(defgeneric (setf fraction) (decimal progress)
+  (:documentation
+   "Sets the progress to a decimal number between 0.0 and 1.0."))
 
 ;; Timer-Class
 
