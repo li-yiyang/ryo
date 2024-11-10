@@ -148,6 +148,15 @@ drop down when you click on the box. "))
 Usually, a progress bar represents a percentage (from 0% to 100%.)
 Shoes thinks of progress in terms of the decimal numbers 0.0 to 1.0. "))
 
+;; Radio
+
+(defclass radio (element clog:clog-form-element) ()
+  (:documentation
+   "Radio buttons are a group of clickable circles.
+Click a circle and it'll be marked. Only one radio button can be
+marked at a time. (This is similar to the ListBox, where only
+one option can be selected at a time.) "))
+
 ;; Timer
 
 (defclass timer-class (shoes)

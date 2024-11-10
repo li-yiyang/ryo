@@ -79,6 +79,14 @@
         (t (errorf "Bad value for progress: ~A. (should be 0.0~~1.0 or 0~~100). "
                    decimal))))
 
+;;; Radio
+
+(defmethod checked? ((radio radio))
+  (clog:value radio))
+
+(defmethod (setf checked?) (checked (radio radio))
+  (setf (clog:value radio) (if checked t nil)))
+
 ;;; Timers
 
 (defmethod initialize-instance :after ((timer timer-class) &key)

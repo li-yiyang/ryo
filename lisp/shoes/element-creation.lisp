@@ -96,6 +96,14 @@
     (when width  (setf (width  progress) width))
     (when height (setf (height progress) height))))
 
+;; Radio
+
+(defshoes-element radio nil (styles (group :default-radio-group))
+  (with-wrap-as-shoes (radio radio (clog:create-form-element
+                                    *slot* "radio"
+                                    :class "ryo-shoes-progress"))
+    (setf (clog:name radio) (fmt "~@:(~A~)" group))))
+
 ;; TimerClass
 
 (defmacro animation (fps &body body)
