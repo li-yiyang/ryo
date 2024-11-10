@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 16:12
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 15:56
+;; Last-Updated: 2024-11-10 16:24
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -91,6 +91,15 @@ Example:
     (button \"OK!\"
       (alert \"Yes\"))
 "))
+
+;; Check
+
+(defclass check (element clog:clog-form-element) ()
+  (:documentation
+   "Check boxes are clickable square boxes than can be either
+checked or unchecked. A single checkbox usually asks a \"yes\"
+or \"no\" question. Sets of checkboxes are also seen in to-do
+lists. "))
 
 ;; ListBox
 
@@ -288,6 +297,18 @@ Return `element'. "))
   `(on-change ,element (shoes-lambda ,element ,@body)))
 
 ;;; Elements
+
+;; Check
+
+(defgeneric checked? (check)
+  (:documentation
+   "Returns whether the box is checked or not. So, `t' means
+\"yes, the box is checked!\". "))
+
+(defgeneric (setf checked?) (checked check)
+  (:documentation
+   "Marks or unmarks the `check' box.
+Using setting to be `nil' for instance, unchecks the box."))
 
 ;; ListBox
 

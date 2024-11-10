@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-06 20:52
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 15:56
+;; Last-Updated: 2024-11-10 16:24
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -24,6 +24,14 @@
 
 (defmethod (setf text) ((text string) (button button))
   (setf (clog:text button) text))
+
+;;; Check
+
+(defmethod checked? ((check check))
+  (clog:checkedp check))
+
+(defmethod (setf checked?) (checked (check check))
+  (setf (clog:checkedp check) (if checked t nil)))
 
 ;;; ListBox
 

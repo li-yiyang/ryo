@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 18:06
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 15:56
+;; Last-Updated: 2024-11-10 16:24
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -16,6 +16,8 @@
 ;;
 
 (in-package :ryo.shoes)
+
+;; Button
 
 (defun %button (text &rest styles &key &allow-other-keys)
   "Create a `button'. "
@@ -29,6 +31,21 @@
   (let ((button (gensym "BUTTON")))
     `(with-wrap (,button (%button ,text))
        ,(unless (endp body) `(click ,button ,@body)))))
+
+;; Check
+
+(defun %check (&rest styles &key &allow-other-keys)
+  "Create a check box. "
+  (declare (ignore styles))
+  (with-wrap-as-shoes (check check (clog:create-form-element
+                                    *slot* "checkbox"
+                                    :class "ryo-shoes-check"))))
+
+(defmacro check (&rest styles)
+  "Create a check box. "
+  `(%check ,@styles))
+
+;; ListBox
 
 (defun %list-box (list-box-items &key &allow-other-keys)
   "Create a `list-box'. "
@@ -49,6 +66,8 @@
       (let ((list-box (gensym "LIST-BOX")))
         `(with-wrap (,list-box (%list-box ,items ,@styles))
            (change ,list-box ,@body)))))
+
+;; TimerClass
 
 (defmacro animation (fps &body body)
   "Create an `animation' element with `fps'. "
