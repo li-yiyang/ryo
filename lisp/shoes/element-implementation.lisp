@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-06 20:52
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 17:36
+;; Last-Updated: 2024-11-10 17:47
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -36,10 +36,19 @@
 ;;; EditBox
 
 (defmethod text ((edit-box edit-box))
-  (clog:text edit-box))
+  (clog:text-value edit-box))
 
 (defmethod (setf edit-box) (text (edit-box edit-box))
-  (setf (clog:text edit-box) text))
+  (setf (clog:text-value edit-box) text))
+
+;;; EditLine
+
+(defmethod text ((edit-line edit-line))
+  (clog:text-value edit-line))
+
+;; TODO: escape multiple lines
+(defmethod (setf edit-box) (text (edit-line edit-line))
+  (setf (clog:text-value edit-line) text))
 
 ;;; ListBox
 

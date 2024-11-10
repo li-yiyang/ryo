@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 16:12
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 17:36
+;; Last-Updated: 2024-11-10 17:45
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -108,6 +108,12 @@ lists. "))
    "Edit boxes are wide, rectangular boxes for entering text. On
 the web, they call these textareas. These are multi-line edit
 boxes for entering longer descriptions. Essays, even! "))
+
+(defclass edit-line (element clog:clog-form-element) ()
+  (:documentation
+   "Edit lines are a slender, little box for entering text. While
+the EditBox is multi-line, an edit line is just one. Line,
+that is. Horizontal, in fact. "))
 
 ;; ListBox
 

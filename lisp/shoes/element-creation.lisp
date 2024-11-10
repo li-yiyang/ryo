@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 18:06
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 17:32
+;; Last-Updated: 2024-11-10 17:45
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -49,6 +49,15 @@
                                       :class "ryo-shoes-edit-box"))
     (when width  (setf (clog:width  edit) width))
     (when height (setf (clog:height edit) height))))
+
+;; EditLine
+
+(defshoes-element edit-line change (styles width passwd-p)
+  "Create a `edit-line'. "
+  (with-wrap-as-shoes (edit edit-line (clog:create-form-element
+                                       *slot* (if passwd-p "password" "text")
+                                       :class "ryo-shoes-edit-line"))
+    (when width (setf (clog:width edit) width))))
 
 ;; ListBox
 
