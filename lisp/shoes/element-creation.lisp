@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 18:06
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 16:24
+;; Last-Updated: 2024-11-10 17:32
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -34,38 +34,35 @@
 
 ;; Check
 
-(defun %check (&rest styles &key &allow-other-keys)
+(defshoes-element check nil (styles)
   "Create a check box. "
-  (declare (ignore styles))
   (with-wrap-as-shoes (check check (clog:create-form-element
                                     *slot* "checkbox"
                                     :class "ryo-shoes-check"))))
 
-(defmacro check (&rest styles)
-  "Create a check box. "
-  `(%check ,@styles))
+;; EditBox
+
+(defshoes-element edit-box change (styles width (height 100))
+  "Create a `edit-box'. "
+  (with-wrap-as-shoes (edit edit-box (clog:create-text-area
+                                      *slot*
+                                      :class "ryo-shoes-edit-box"))
+    (when width  (setf (clog:width  edit) width))
+    (when height (setf (clog:height edit) height))))
 
 ;; ListBox
 
-(defun %list-box (list-box-items &key &allow-other-keys)
+(defshoes-element list-box change (styles items)
   "Create a `list-box'. "
   (with-wrap-as-shoes (list-box list-box
                         (clog:create-select *slot*
                                             :class "ryo-shoes-select"))
-    (with-slots (items) list-box
-      (loop for item in list-box-items do
+    (with-slots ((list-box-items items)) list-box
+      (loop for item in items do
         (progn
           (clog:add-select-option list-box item item)
-          (push item items)))
-      (setf items (nreverse items)))))
-
-(defmacro list-box ((items &rest styles &key &allow-other-keys) &body body)
-  "Create a `list-box'. "
-  (if (endp body)
-      `(%list-box ,items ,@styles)
-      (let ((list-box (gensym "LIST-BOX")))
-        `(with-wrap (,list-box (%list-box ,items ,@styles))
-           (change ,list-box ,@body)))))
+          (push item list-box-items)))
+      (setf list-box-items (nreverse list-box-items)))))
 
 ;; TimerClass
 

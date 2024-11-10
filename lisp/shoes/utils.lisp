@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 16:05
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-09 14:04
+;; Last-Updated: 2024-11-10 17:32
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -82,5 +82,35 @@ normal user. "
                            (declare (ignorable *app* *slot* *self*))
                            (declare (special *app* *slot* *self*))
                            ,@(cons expr rest))))))))
+
+;; TODO: need a better definition
+(defmacro defshoes-element (element handler-p (styles &rest keys) &body body)
+  (let ((func (intern (fmt "%~@:(~A~)" element)))
+        (docstring (if (stringp (first body)) (first body)
+                       (fmt "Create a ~A" element)))
+        (body      (if (stringp (first body)) (rest body) body))
+        (elem      (gensym (fmt "~@:(~A~)" element)))
+        (keysyms   (mapcar (lambda (key) (if (listp key) (first key) key)) keys)))
+    (if handler-p
+        `(progn
+           (defun ,func (&rest ,styles &key ,@keys &allow-other-keys)
+             ,docstring
+             (declare (ignorable ,styles))
+             ,@body)
+           (defmacro ,element ((&rest ,styles &key ,@keys &allow-other-keys)
+                               &body body)
+             ,docstring
+             (declare (ignore ,@keysyms))
+             `(with-wrap (,',elem (,',func ,@styles))
+                ,(unless (endp body) `(,',handler-p ,',elem ,@body)))))
+        `(progn
+           (defun ,func (&rest ,styles &key ,@keys &allow-other-keys)
+             ,docstring
+             (declare (ignorable ,styles))
+             ,@body)
+           (defmacro ,element (&rest ,styles &key ,@keys &allow-other-keys)
+             ,docstring
+             (declare (ignore ,@keysyms))
+             `(with-wrap (,',elem (,',func ,@styles))))))))
 
 ;;; utils.lisp ends here
