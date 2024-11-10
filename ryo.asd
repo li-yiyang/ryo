@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-10-31 01:15
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-09 14:36
+;; Last-Updated: 2024-11-10 22:27
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -93,6 +93,7 @@
        ;; declaration for some closure variables
        (:file "config")
        (:file "utils")
+       (:file "image-utils")
 
        ;;; some low-level CLOG bindings
        (:file "shoes-server")

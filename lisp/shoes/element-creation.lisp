@@ -59,6 +59,18 @@
                                        :class "ryo-shoes-edit-line"))
     (when width (setf (clog:width edit) width))))
 
+;; Image
+
+(defun image (path &rest styles &key width height &allow-other-keys)
+  "Create an image. "
+  (cond ((stringp path)
+         (with-wrap-as-shoes (image image (clog:create-img *slot* :url-src path))
+           (when width  (setf (clog:width  image) width))
+           (when height (setf (clog:height image) height))))
+        ((pathnamep path)
+         (apply #'image (load-image-to-base64 path) styles))
+        (t (errorf "To load image from ~A is not implemented yet" path))))
+
 ;; ListBox
 
 (defshoes-element list-box change (styles items)

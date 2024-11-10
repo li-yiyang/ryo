@@ -109,11 +109,27 @@ lists. "))
 the web, they call these textareas. These are multi-line edit
 boxes for entering longer descriptions. Essays, even! "))
 
+;; EditLine
+
 (defclass edit-line (element clog:clog-form-element) ()
   (:documentation
    "Edit lines are a slender, little box for entering text. While
 the EditBox is multi-line, an edit line is just one. Line,
 that is. Horizontal, in fact. "))
+
+;; Graphics
+
+(defclass graphics (element clog:clog-canvas) ()
+  (:documentation
+   "Graphics is a box like thing in which you draw a lot of things. "))
+
+;; Image
+
+(defclass image (element clog:clog-img) ()
+  (:documentation
+   "An image is a picture in PNG, JPEG or GIF format. Shoes can
+resize images or flow them in with text. Images can be loaded
+from a file or directly off the web. "))
 
 ;; ListBox
 
