@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-10-31 10:37
 ;; Version: 0.0.0
-;; Last-Updated: 2024-10-31 10:37
+;; Last-Updated: 2024-11-15 14:52
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -26,20 +26,20 @@
   `(/= (length ,sequence) ,len))
 
 (defmacro length> (sequence len)
-  "Test if `sequence' length is less than `len'. "
-  `(< (length ,sequence) ,len))
-
-(defmacro length< (sequence len)
   "Test if `sequence' length is greater than `len'. "
   `(> (length ,sequence) ,len))
 
-(defmacro length>= (sequence len)
-  "Test if `sequence' length is less or equal than `len'. "
-  `(<= (length ,sequence) ,len))
+(defmacro length< (sequence len)
+  "Test if `sequence' length is less than `len'. "
+  `(< (length ,sequence) ,len))
 
-(defmacro length<= (sequence len)
+(defmacro length>= (sequence len)
   "Test if `sequence' length is greater or equal than `len'. "
   `(>= (length ,sequence) ,len))
+
+(defmacro length<= (sequence len)
+  "Test if `sequence' length is less or equal than `len'. "
+  `(<= (length ,sequence) ,len))
 
 (defmacro neq (a b)
   "Test if `a' and `b' are not `eq'. "
