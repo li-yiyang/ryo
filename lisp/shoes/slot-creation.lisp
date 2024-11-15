@@ -17,32 +17,34 @@
 
 (in-package :ryo.shoes)
 
-(defun %stack (block &rest styles &key width height &allow-other-keys)
+(defun %stack (block &rest styles &key width height margin &allow-other-keys)
   "Create a new Stack. "
   (declare (ignorable styles))
   (with-wrap-as-shoes
       (*slot* stack (clog:create-div *slot* :class "ryo-shoes-stack"))
     (when width  (setf (width  *slot*) width))
     (when height (setf (height *slot*) height))
+    (when margin (setf (margin *slot*) margin))
     (funcall block)))
 
-(defmacro stack ((&rest styles &key width height &allow-other-keys) &body body)
+(defmacro stack ((&rest styles &key width height margin &allow-other-keys) &body body)
   "Create a new Stack. "
-  (declare (ignore width height))
+  (declare (ignore width height margin))
   `(%stack (lambda () ,@body) ,@styles))
 
-(defun %flow (block &rest styles &key width height &allow-other-keys)
+(defun %flow (block &rest styles &key width height margin &allow-other-keys)
   "Create a new Flow. "
   (declare (ignorable styles))
   (with-wrap-as-shoes
-      (*slot* flow (clog:create-div *slot* :class "ryo-shoes-stack"))
+      (*slot* flow (clog:create-div *slot* :class "ryo-shoes-flow"))
     (when width  (setf (width  *slot*) width))
     (when height (setf (height *slot*) height))
+    (when margin (setf (margin *slot*) margin))
     (funcall block)))
 
-(defmacro flow ((&rest styles &key width height &allow-other-keys) &body body)
+(defmacro flow ((&rest styles &key width height margin &allow-other-keys) &body body)
   "Create a new Stack. "
-  (declare (ignore width height))
+  (declare (ignore width height margin))
   `(%flow (lambda () ,@body) ,@styles))
 
 ;;; slot-creation.lisp ends here

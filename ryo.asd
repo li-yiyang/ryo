@@ -24,6 +24,7 @@
   ""
   :depends-on (trivial-indent
                trivial-garbage
+               trivial-channels
                str
                clog clog-c3
                parse-float
@@ -84,7 +85,7 @@
       :components
       ((:file "format")
        (:file "condition")
-
+       (:file "restart-handler")
        ))
 
      (:module ryo.shoes
@@ -96,6 +97,7 @@
        (:file "config")
        (:file "utils")
        (:file "image-utils")
+       (:file "text-like-utils")
 
        ;;; some low-level CLOG bindings
        (:file "shoes-server")
@@ -116,6 +118,7 @@
        ;; app
        (:file "app-creation")
        (:file "app-implementation")
+       (:file "built-in-methods")
 
        ))))))
 

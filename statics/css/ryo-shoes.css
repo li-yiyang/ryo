@@ -2,8 +2,18 @@
     display: block;
 }
 
+.ryo-shoes-stack div {
+    display: block;
+}
+
 .ryo-shoes-flow {
     display: inline-block;
+    vertical-align: top;
+}
+
+.ryo-shoes-flow div {
+    display: inline-block;
+    vertical-align: top;
 }
 
 .ryo-shoes-banner {

@@ -100,6 +100,10 @@ updating `RYO.SHOES' lookings.
    ;; closures
    #:*app*
    #:*slot*
+   #:*self*
+
+   ;; App
+   #:window
 
    ;; Slots
    #:stack
@@ -107,6 +111,19 @@ updating `RYO.SHOES' lookings.
 
    ;;; Elements
    #:button
+   #:check
+   #:edit-box
+   #:edit-line
+   #:graphics
+   #:image
+   #:list-box
+   #:progress
+   #:radio
+
+   ;; timer-class
+   #:animation
+   #:every-nsec
+   #:timer
 
    ;;; TextLike
    ;; TextBlock
@@ -135,6 +152,9 @@ updating `RYO.SHOES' lookings.
    #:text
    #:owner
    #:@
+
+   ;; built-in method
+   #:alert
 
    ;; shoes server
    #:shutdown-shoes

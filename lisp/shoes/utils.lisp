@@ -66,6 +66,7 @@ events, timer (threads) code rather than directly exposed to
 normal user. "
   (let ((slot  (gensym "SLOT"))
         (app   (gensym "APP"))
+        (clog  (gensym "CLOG"))
         (selfv (gensym "SELF")))
     (loop for (expr . rest) on body by #'cdr
           while (and (listp expr) (eq (first expr) 'declare))
@@ -73,11 +74,13 @@ normal user. "
           finally (return
                     `(let ((,slot  *slot*)
                            (,app   *app*)
+                           (,clog  *clog*)
                            (,selfv ,self))
                        (lambda ()
                          ,@declarations
                          (let ((*app*  ,app)
                                (*slot* ,slot)
+                               (*clog* ,clog)
                                (*self* ,selfv))
                            (declare (ignorable *app* *slot* *self*))
                            (declare (special *app* *slot* *self*))

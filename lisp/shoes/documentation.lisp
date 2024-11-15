@@ -204,10 +204,10 @@ is backended to <span> in HTML. "))
 The div is bind with `.ryo-shoes-<name>' CSS style class. "
   `(progn
      (defclass ,name (text-block) () (:documentation ,docstring))
-     (defmacro ,name (&rest texts)
+     (defmacro ,name (&body texts*)
        ,(fmt "Create a ~A, ~A" name docstring)
        `(with-div-wrap-as-shoes (*slot* ,',name ,',(fmt "ryo-shoes-~(~A~)" name))
-          ,@(loop for text in texts collect `(%text-block ,text))))))
+          ,@(expand-define-text-block-texts* texts*)))))
 
 ;; TODO: make the content more better data structure,
 ;; possible to learn how emacs take over the string
@@ -307,6 +307,14 @@ If `height' is
 + float between 0..1: converted into percents
 + string: raw HTML (not recommanded)"))
 
+(defgeneric margin (shoes)
+  (:documentation
+   "Gets Shoes element's margin. "))
+
+(defgeneric (setf margin) (margin shoes)
+  (:documentation
+   "Sets Shoes elements' margin. "))
+
 (defgeneric hide (shoes)
   (:documentation
    "Hides the element, so that it can't be seen.
@@ -364,7 +372,7 @@ Using setting to be `nil' for instance, unchecks the box."))
    "Selects the option in the `list-box' that matches the string
 given by `item'. "))
 
-(defgneric items (list-box)
+(defgeneric items (list-box)
   (:documentation
    "Returns the complete list of strings that the list box
 presently shows as its options."))

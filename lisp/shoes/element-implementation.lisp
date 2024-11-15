@@ -38,7 +38,7 @@
 (defmethod text ((edit-box edit-box))
   (clog:text-value edit-box))
 
-(defmethod (setf edit-box) (text (edit-box edit-box))
+(defmethod (setf text) (text (edit-box edit-box))
   (setf (clog:text-value edit-box) text))
 
 ;;; EditLine
@@ -47,7 +47,7 @@
   (clog:text-value edit-line))
 
 ;; TODO: escape multiple lines
-(defmethod (setf edit-box) (text (edit-line edit-line))
+(defmethod (setf text) (text (edit-line edit-line))
   (setf (clog:text-value edit-line) text))
 
 ;;; ListBox

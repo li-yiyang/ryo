@@ -26,6 +26,14 @@
 (defmethod height ((shoes shoes))
   (clog:height shoes))
 
+;; TODO: parse width and height if they are string first
+
+(defmethod (setf width) ((width string) (shoes shoes))
+  (setf (clog:width shoes) width))
+
+(defmethod (setf height) ((height string) (shoes shoes))
+  (setf (clog:height shoes) height))
+
 (defmethod (setf width) ((width integer) (shoes shoes))
   (cond ((> width 0) (setf (clog:width shoes) width))
         ((< width 0)
@@ -42,6 +50,20 @@
              (setf (clog:height shoes) (+ (height (parent shoes)) height))
              (errorf "Trying to set root element ~A with negative height ~D" shoes height)))
         (t (errorf "Trying to set ~A width to 0. " shoes))))
+
+(defmethod margin ((app app))
+  (clog:margin (clog-gui:window-content app)))
+
+(defmethod (setf margin) (margin (app app))
+  (let ((margin (fmt "~Dpx" margin)))
+    (clog:set-margin app margin margin margin margin)))
+
+(defmethod margin ((slot slot))
+  (clog:margin slot))
+
+(defmethod (setf margin) (margin (slot slot))
+  (let ((margin (fmt "~Dpx" margin)))
+    (clog:set-margin slot margin margin margin margin)))
 
 (defmethod hide ((shoes shoes))
   (setf (clog:visiblep shoes) nil))
