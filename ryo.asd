@@ -86,6 +86,9 @@
       ((:file "format")
        (:file "condition")
        (:file "restart-handler")
+       (:file "iter")
+       (:file "setf")
+       (:file "type-convert")
        ))
 
      (:module ryo.shoes
@@ -120,6 +123,13 @@
        (:file "app-implementation")
        (:file "built-in-methods")
 
-       ))))))
+       ))
+
+     (:module ryo.stat
+      :pathname "stat"
+      :components
+      ((:file "histogram")
+       (:file "histogram-implementation")))
+     ))))
 
 ;;; ryo.asd ends here

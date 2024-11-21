@@ -18,8 +18,12 @@
 (defpackage #:ryo.macros
   (:use :cl)
   (:documentation
-   "RYO.MACROS is a set of handly macros")
+   "RYO.MACROS is a set of handly macros and utils functions for macros.
+")
   (:export
+   ;; utils
+   #:split-list-plist?-by-literal-keyword
+
    ;; format
    #:errorf
    #:warnf
@@ -36,7 +40,25 @@
    #:neq
 
    ;; restart-handler
-   #:assert-restart))
+   #:assert-restart
+
+   ;; iter
+   #:iter-i*
+   #:dotimes-collect
+   #:map*
+   #:mapcar*
+   #:indexed-map*
+   #:indexed-mapcar*
+
+   ;; setf
+   #:cyclef
+   #:swapf
+
+   ;; type-convert
+   #:str-int
+   #:str-float
+
+   ))
 
 (defpackage #:ryo.shoes
   (:use :cl :ryo.macros)
@@ -162,7 +184,25 @@ updating `RYO.SHOES' lookings.
    #:reboot-shoes
    ))
 
+(defpackage #:ryo.stat
+  (:use :cl :ryo.macros)
+  (:export
+   ;; histogram
+   #:histogram
+   #:hist-bins
+   #:hist-mins
+   #:hist-maxs
+   #:hist-dims
+   #:hist-rebin!
+   #:hist-dump
+   #:hist-data-count
+   #:add-to-hist
+   #:make-histogram
+   ))
+
 (defpackage #:ryo
-  (:use :cl :ryo.macros))
+  (:use :cl :ryo.macros :ryo.shoes :ryo.stat)
+  (:documentation
+   "A place to try and for experiments. "))
 
 ;;; package.lisp ends here
