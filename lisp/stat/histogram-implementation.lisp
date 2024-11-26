@@ -133,4 +133,26 @@
   (with-slots (counts) hist
     (reduce (lambda (count-dim) (reduce #'+ count-dim)) counts)))
 
+;; CLOG-C3 wrapper for RYO.SHOES
+
+(defmethod clog-c3:c3-data-id ((hist histogram))
+  (fmt "~(~A~)" (hist-id hist)))
+
+(defmethod clog-c3:c3-data-type ((hist histogram))
+  :step)
+
+(defmethod clog-c3:c3-form ((hist histogram))
+  (with-slots (dims bins counts mins ticks) hist
+    (cond ((= 1 dims)
+           (with-output-to-strings (ys xs)
+             (let ((tick (first ticks))
+                   (bin  (first bins))
+                   (min  (first mins)))
+               (format ys "~{~A~^,~}"
+                       (map 'list #'identity (aref counts 0)))
+               (format xs "~{~F~^,~}"
+                       (dotimes-collect (i bin) (+ (* tick i) min))))
+             (values ys xs)))
+          (t (errorf "Not implemented yet for DIM=~D" dims)))))
+
 ;;; histogram-implementation.lisp ends here

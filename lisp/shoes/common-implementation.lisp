@@ -20,11 +20,19 @@
 (defmethod contents ((slot slot))
   (reverse (slot-value slot 'contents)))
 
+(declaim (inline parse-clog-quantity))
+(defun parse-clog-quantity (val)
+  "If `val' is string like `1234px', return `1234';
+or if `val' is integer, return integer. "
+  (typecase val
+    (string    (parse-integer val :junk-allowed t))
+    (otherwise val)))
+
 (defmethod width ((shoes shoes))
-  (clog:width shoes))
+  (parse-clog-quantity (clog:width shoes)))
 
 (defmethod height ((shoes shoes))
-  (clog:height shoes))
+  (parse-clog-quantity (clog:height shoes)))
 
 ;; TODO: parse width and height if they are string first
 

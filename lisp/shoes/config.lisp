@@ -50,7 +50,7 @@ with parameter `:port', the port value will be bind to
 Develop Note:
 It's like opening the box and enter to it. ")
 
-(defparameter *slef* nil
+(defparameter *self* nil
   "Current handler function caller.
 
 Example:

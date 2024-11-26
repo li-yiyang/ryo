@@ -18,7 +18,13 @@
 (in-package :ryo.stat)
 
 (defclass histogram ()
-  ((bins
+  ((id
+    :initform (gensym "HISTOGRAM")
+    :reader   hist-id
+    :documentation
+    "UUID for `histogram'.
+Used for CLOG-C3 plot only. ")
+   (bins
     :initform ()
     :initarg  :bins
     :accessor hist-bins

@@ -29,7 +29,8 @@
                clog clog-c3
                parse-float
                qbase64
-               lparallel)
+               lparallel
+               cl-colors2)
   :serial t
   :components
   (
@@ -83,13 +84,19 @@
      (:module ryo.macros
       :pathname "macros"
       :components
-      ((:file "format")
+      ((:file "utils")
+       (:file "format")
        (:file "condition")
        (:file "restart-handler")
        (:file "iter")
        (:file "setf")
        (:file "type-convert")
        ))
+
+     (:module ryo.fns
+      :pathname "fns"
+      :components
+      ((:file "elementary-math")))
 
      (:module ryo.shoes
       :pathname "shoes"
@@ -118,11 +125,13 @@
        ;; TextLike
        (:file "text-like-implementation")
 
+       ;; CLOG-C3 plot
+       (:file "c3-plot")
+
        ;; app
        (:file "app-creation")
        (:file "app-implementation")
        (:file "built-in-methods")
-
        ))
 
      (:module ryo.stat

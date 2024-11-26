@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-10-31 10:11
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-09 14:35
+;; Last-Updated: 2024-11-23 16:03
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -29,6 +29,7 @@
    #:warnf
    #:fmt
    #:fmt!
+   #:with-output-to-strings
 
    ;; condition
    #:length=
@@ -59,6 +60,16 @@
    #:str-float
 
    ))
+
+(defpackage #:ryo.fns
+  (:use :cl :ryo.macros)
+  (:documentation
+   "RYO.FNS is a set of functions I found missing in cl. ")
+  (:export
+   #:2+
+   #:2-
+   #:2*
+   #:2/))
 
 (defpackage #:ryo.shoes
   (:use :cl :ryo.macros)
@@ -174,6 +185,10 @@ updating `RYO.SHOES' lookings.
    #:text
    #:owner
    #:@
+
+   ;; CLOG-C3
+   #:c3-plot
+   #:plot
 
    ;; built-in method
    #:alert

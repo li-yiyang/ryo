@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-10-31 10:19
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-06 16:41
+;; Last-Updated: 2024-11-23 16:12
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -63,5 +63,37 @@ Example:
   "Format to `*standard-output*', shotcut for `format'.
 See `fmt' for formatting to string. "
   `(format *standard-output* ,control-string ,@args))
+
+(defmacro with-output-to-strings
+    ((stream* &rest more-streams*) progn &body body)
+  "Like `with-output-to-string' but supports multiple streams.
+Return values of strings for each stream.
+
+Syntax:
+ * the `stream*' should be like single symbol or (string stream)
+
+Example:
+  (with-output-to-strings (stream1 (string2 stream2))
+    (progn
+      (format stream1 \"to stream 1\")
+      (format stream2 \"to stream 2\"))
+    (values stream1 string2))
+"
+  (let ((stream* (mapcar (lambda (stream*)
+                           (if (listp stream*)
+                               stream*
+                               (list stream* stream*)))
+                         (cons stream* more-streams*))))
+    `(let (,@(mapcar #'first stream*))
+       ,(loop for (str strm)  in stream*
+              for prog = `(setf ,str (with-output-to-string (,strm) ,progn))
+                then `(setf ,str (with-output-to-string (,strm) ,prog))
+              finally (return prog))
+       ,@(if (endp body)
+             `((values ,@(mapcar #'first stream*)))
+             body))))
+
+;; for SLIME/SLY
+(trivial-indent:define-indentation with-output-to-strings (4 2 &body))
 
 ;;; format.lisp ends here
