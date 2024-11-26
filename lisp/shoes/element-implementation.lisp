@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-06 20:52
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 17:47
+;; Last-Updated: 2024-11-26 21:11
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -92,28 +92,37 @@
 (defmethod initialize-instance :after ((timer timer-class) &key)
   (start timer))
 
+(defmethod start :before ((timer timer-class))
+  (with-slots (running-p) timer
+    (setf running-p t)))
+
 (defmethod start ((timer animation))
   (with-slots (function thread fps) timer
     (setf thread (bt:make-thread
                   (let ((sleep (float (/ 1 fps))))
-                    (lambda () (loop do (sleep sleep) while (funcall function))))
+                    (lambda () (loop while (and (funcall function)
+                                                (slot-value timer 'running-p))
+                                     do (sleep sleep))))
                   :name (fmt "~A thread" timer)))))
 
 (defmethod start ((timer every-sec))
   (with-slots (function thread sec) timer
     (setf thread (bt:make-thread
-                  (lambda () (loop do (sleep sec) while (funcall function)))
-                  :name (fmt "~A thread" timer)))))
+                  (lambda () (loop while (and (funcall function)
+                                              (slot-value timer 'running-p))
+                                   do (sleep sec))
+                    :name (fmt "~A thread" timer))))))
 
 (defmethod start ((timer timer))
-  (with-slots (function thread sec) timer
+  (with-slots (function thread sec running-p) timer
     (setf thread (bt:make-thread
                   (lambda () (sleep sec) (funcall function))
-                  :name (fmt "~A thread" timer)))))
+                  :name (fmt "~A thread" timer)))
+    (setf running-p nil)))
 
 (defmethod stop ((timer timer-class))
-  (with-slots (thread) timer
-    (bt:destroy-thread thread)))
+  (with-slots (running-p) timer
+    (setf running-p nil)))
 
 (defmethod toggle ((timer timer-class))
   (with-slots (thread) timer

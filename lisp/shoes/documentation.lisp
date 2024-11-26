@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-11-08 16:12
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-10 17:45
+;; Last-Updated: 2024-11-26 21:11
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -161,6 +161,7 @@ one option can be selected at a time.) "))
 
 (defclass timer-class (shoes)
   (thread
+   (running-p :initform nil)
    (function :initarg :function
              :initform (error "Missing `:function'. ")))
   (:documentation

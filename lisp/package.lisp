@@ -7,7 +7,7 @@
 ;; Copyright (c) 2024, 凉凉, all rights reserved
 ;; Created: 2024-10-31 10:11
 ;; Version: 0.0.0
-;; Last-Updated: 2024-11-23 16:03
+;; Last-Updated: 2024-11-26 21:11
 ;;           By: 凉凉
 ;; URL: https://github.com/li-yiyang/ryo
 ;; Keywords:
@@ -155,7 +155,7 @@ updating `RYO.SHOES' lookings.
 
    ;; timer-class
    #:animation
-   #:every-nsec
+   #:every-sec
    #:timer
 
    ;;; TextLike
@@ -167,6 +167,7 @@ updating `RYO.SHOES' lookings.
    #:caption
    #:para
    #:inscription
+
    ;; TextClass
    #:em
    #:span
@@ -175,6 +176,10 @@ updating `RYO.SHOES' lookings.
    #:strong
 
    ;;; Manipulation
+   #:start
+   #:stop
+   #:toggle
+   #:fraction
    #:parent
    #:contents
    #:width
